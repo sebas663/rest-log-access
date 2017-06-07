@@ -11,11 +11,11 @@
 	<name>log-access</name>
 	<description>Project for log access from Sidca</description>
 
-<!-- 	<parent> -->
-<!--         <groupId>org.springframework.boot</groupId> -->
-<!--         <artifactId>spring-boot-starter-parent</artifactId> -->
-<!--         <version>1.5.3.RELEASE</version> -->
-<!--     </parent> -->
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+    </parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,42 +24,44 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-            <!-- Import dependency management from Spring Boot -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>1.5.3.RELEASE</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
+<!-- 		<dependency> -->
+<!--             <groupId>org.springframework.boot</groupId> -->
+<!--             <artifactId>spring-boot-dependencies</artifactId> -->
+<!--             <version>1.5.3.RELEASE</version> -->
+<!--             <type>pom</type> -->
+<!--             <scope>import</scope> -->
+<!--         </dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>1.5.3.RELEASE</version>
+<!-- 			<version>1.5.3.RELEASE</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
-			<version>1.5.3.RELEASE</version>
+<!-- 			<version>1.5.3.RELEASE</version> -->
 		</dependency>
 		<!-- Oracle JDBC driver -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <version>12.1.0</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>com.oracle</groupId> -->
+<!--             <artifactId>ojdbc7</artifactId> -->
+<!--             <version>12.1.0</version> -->
+<!--         </dependency> -->
 
          <!-- Common DBCP2 connection pool -->
         <dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-dbcp2</artifactId>
-		    <version>2.1.1</version>
+<!-- 		    <version>2.1.1</version> -->
 		</dependency>
-        
+        <dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>1.5.3.RELEASE</version>
+<!-- 			<version>1.5.3.RELEASE</version> -->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -69,15 +71,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>1.5.3.RELEASE</version>
+<!-- 				<version>1.5.3.RELEASE</version> -->
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-        <repository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </repository>
+<!-- 	<repositories> -->
+<!--         <repository> -->
+<!--             <id>spring-releases</id> -->
+<!--             <url>https://repo.spring.io/libs-release</url> -->
+<!--         </repository> -->
 <!--         <repository> -->
 <!--             <id>spring-snapshots</id> -->
 <!--             <url>http://repo.spring.io/snapshot</url> -->
@@ -87,12 +89,12 @@
 <!--             <id>spring-milestones</id> -->
 <!--             <url>http://repo.spring.io/milestone</url> -->
 <!--         </repository> -->
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>
+<!--     </repositories> -->
+<!--     <pluginRepositories> -->
+<!--         <pluginRepository> -->
+<!--             <id>spring-releases</id> -->
+<!--             <url>https://repo.spring.io/libs-release</url> -->
+<!--         </pluginRepository> -->
 <!--         <pluginRepository> -->
 <!--             <id>spring-snapshots</id> -->
 <!--             <url>http://repo.spring.io/snapshot</url> -->
@@ -101,10 +103,10 @@
 <!--             <id>spring-milestones</id> -->
 <!--             <url>http://repo.spring.io/milestone</url> -->
 <!--          </pluginRepository> -->
-         <pluginRepository>
-            <id>spring-plugins-releases</id>
-            <url>https://repo.spring.io/plugins-release</url>
-        </pluginRepository>
-    </pluginRepositories>
+<!--          <pluginRepository> -->
+<!--             <id>spring-plugins-releases</id> -->
+<!--             <url>https://repo.spring.io/plugins-release</url> -->
+<!--         </pluginRepository> -->
+<!--     </pluginRepositories> -->
 
 </project>

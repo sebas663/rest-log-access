@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.log.access.entities.LogAccess;
 import com.log.access.repositories.ILogAccessRepository;
-
+/**
+ * 
+ * @author sebastian
+ *
+ */
 @Service
 public class LogAccessService implements ILogAccessService{
 	/**
@@ -20,7 +24,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getAll()
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getAll() {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findAll();
@@ -29,16 +33,16 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getBetweenDates(java.util.Date, java.util.Date)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getBetweenDates(Date from, Date to) {
 		// TODO Auto-generated method stub
-		return logAccessRepository.getBetweenDates(from, to);
+		return logAccessRepository.findByRCreationDateBetween(from, to);
 	}
 	/*
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByLogin(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByLogin(String login) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByLogin(login);
@@ -47,7 +51,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByDocument(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByDocument(String document) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByDocument(document);
@@ -56,7 +60,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByAction(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByAction(String action) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByAction(action);
@@ -65,7 +69,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByNhc(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByNhc(String nhc) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByNhc(nhc);
@@ -74,7 +78,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByNepisode(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByNepisode(String nepisode) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByNepisode(nepisode);
@@ -83,7 +87,7 @@ public class LogAccessService implements ILogAccessService{
 	 * (non-Javadoc)
 	 * @see com.log.access.services.ILogAccessService#getByIp(java.lang.String)
 	 */
-	@Override
+//	@Override
 	public List<LogAccess> getByIp(String ip) {
 		// TODO Auto-generated method stub
 		return logAccessRepository.findByIp(ip);

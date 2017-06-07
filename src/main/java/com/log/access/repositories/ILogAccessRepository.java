@@ -4,42 +4,54 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.log.access.entities.LogAccess;
-
+/**
+ * 
+ * @author sebastian
+ *
+ */
 public interface ILogAccessRepository  extends JpaRepository<LogAccess, Long> {
-	
-	@Query("select b from LogAccess b " +
-	         "where b.r_creation_date between ?1 and ?2")
-	List<LogAccess> getBetweenDates(Date from, Date to);
 	/**
 	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	List<LogAccess> findByRCreationDateBetween(Date from, Date to);
+	/**
+	 * 
+	 * @param login
 	 * @return
 	 */
 	List<LogAccess> findByLogin(String login);
 	/**
 	 * 
+	 * @param document
 	 * @return
 	 */
 	List<LogAccess> findByDocument(String document);
 	/**
 	 * 
+	 * @param action
 	 * @return
 	 */
 	List<LogAccess> findByAction(String action);
 	/**
 	 * 
+	 * @param nhc
 	 * @return
 	 */
 	List<LogAccess> findByNhc(String nhc);
 	/**
 	 * 
+	 * @param nepisode
 	 * @return
 	 */
 	List<LogAccess> findByNepisode(String nepisode);
 	/**
 	 * 
+	 * @param ip
 	 * @return
 	 */
 	List<LogAccess> findByIp(String ip);

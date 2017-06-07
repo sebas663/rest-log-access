@@ -3,57 +3,81 @@ package com.log.access.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+/**
+ * 
+ * @author sebastian
+ *
+ */
 @Entity
-@Table(name="LOG_ACCESS_DATA_VIEW")
+@Table(name="LOG_ACCESS_DATA_T")
 public class LogAccess implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
+	/**
+	 * Sin un id no puedo mapear la vista como entidad.
+	 * tengo que agregar en la vista
+	 * rownum AS ID
+	 * see http://tuhrig.de/using-spring-data-for-database-views-without-an-id/
+	 */
+	@Id
+    @Column(name = "id")
+    private Long id;
 	/**
 	 * 
 	 */
-	private Date r_creation_date;
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@Column(name = "r_creation_date")
+	private Date rCreationDate;
 	/**
 	 * 
 	 */
+	@Column(name = "login")
 	private String login;
 	/**
 	 * 
 	 */
+	@Column(name = "documento")
 	private String document;
 	/**
 	 * 
 	 */
+	@Column(name = "accion")
 	private String action;
 	/**
 	 * 
 	 */
+	@Column(name = "nhc")
 	private String nhc;
 	/**
 	 * 
 	 */
+	@Column(name = "nepisodio")
 	private String nepisode;
 	/**
 	 * 
 	 */
+	@Column(name = "ip")
 	private String ip;
-	
 	/**
-	 * @return the r_creation_date
+	 * @return the rCreationDate
 	 */
-	public Date getR_creation_date() {
-		return r_creation_date;
+	public Date getrCreationDate() {
+		return rCreationDate;
 	}
 	/**
-	 * @param r_creation_date the r_creation_date to set
+	 * @param rCreationDate the rCreationDate to set
 	 */
-	public void setR_creation_date(Date r_creation_date) {
-		this.r_creation_date = r_creation_date;
+	public void setrCreationDate(Date rCreationDate) {
+		this.rCreationDate = rCreationDate;
 	}
 	/**
 	 * @return the login
@@ -68,28 +92,28 @@ public class LogAccess implements Serializable {
 		this.login = login;
 	}
 	/**
-	 * @return the documento
+	 * @return the document
 	 */
-	public String getDocumento() {
-		return documento;
+	public String getDocument() {
+		return document;
 	}
 	/**
-	 * @param documento the documento to set
+	 * @param document the document to set
 	 */
-	public void setDocumento(String documento) {
-		this.documento = documento;
+	public void setDocument(String document) {
+		this.document = document;
 	}
 	/**
-	 * @return the accion
+	 * @return the action
 	 */
-	public String getAccion() {
-		return accion;
+	public String getAction() {
+		return action;
 	}
 	/**
-	 * @param accion the accion to set
+	 * @param action the action to set
 	 */
-	public void setAccion(String accion) {
-		this.accion = accion;
+	public void setAction(String action) {
+		this.action = action;
 	}
 	/**
 	 * @return the nhc
@@ -104,16 +128,16 @@ public class LogAccess implements Serializable {
 		this.nhc = nhc;
 	}
 	/**
-	 * @return the nepisodio
+	 * @return the nepisode
 	 */
-	public String getNepisodio() {
-		return nepisodio;
+	public String getNepisode() {
+		return nepisode;
 	}
 	/**
-	 * @param nepisodio the nepisodio to set
+	 * @param nepisode the nepisode to set
 	 */
-	public void setNepisodio(String nepisodio) {
-		this.nepisodio = nepisodio;
+	public void setNepisode(String nepisode) {
+		this.nepisode = nepisode;
 	}
 	/**
 	 * @return the ip

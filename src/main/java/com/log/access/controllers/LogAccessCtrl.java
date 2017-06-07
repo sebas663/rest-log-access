@@ -1,6 +1,6 @@
 package com.log.access.controllers;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.log.access.entities.LogAccess;
 import com.log.access.services.ILogAccessService;
-
+/**
+ * 
+ * @author sebastian
+ *
+ */
 @RestController
 @RequestMapping("/logAccess")
 public class LogAccessCtrl {
@@ -41,18 +45,25 @@ public class LogAccessCtrl {
 	}
 	/**
 	 * 
-	 * @param login
+	 * @param from
+	 * @param to
 	 * @return
 	 */
 	@GetMapping("/da")
-	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDates(@RequestParam("from") Date from, @RequestParam("to") Date to) {
+	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDates(@RequestParam("from") String from, @RequestParam("to") String to) {
 		List<LogAccess> list = null;
 		ResponseEntity<List<LogAccess>> response = null;
-		list = logAccessService.getBetweenDates(from, to);
-		if(list != null && list.size() > 0){
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
-		}else{
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			list = logAccessService.getBetweenDates(formatter.parse(from), formatter.parse(to));
+			if(list != null && list.size() > 0){
+				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			}else{
+				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		}
 		return response;
 	}
@@ -141,7 +152,12 @@ public class LogAccessCtrl {
 		}
 		return response;
 	}
-	@GetMapping("/i/{ip}")
+	/**
+	 * 
+	 * @param ip
+	 * @return
+	 */
+	@GetMapping("/i/{ip:.+}")
 	public ResponseEntity<List<LogAccess>> getLogAccessByIp(@PathVariable("ip") String ip) {
 		List<LogAccess> list = null;
 		ResponseEntity<List<LogAccess>> response = null;
