@@ -11,7 +11,7 @@ import com.log.access.entities.LogAccess;
  * @author sebastian
  *
  */
-public interface ILogAccessRepository  extends JpaRepository<LogAccess, Long> {
+public interface ILogAccessRepo  extends JpaRepository<LogAccess, Long> {
 	/**
 	 * 
 	 * @param from

@@ -1,9 +1,13 @@
 package com.log.access.controllers;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -169,4 +173,28 @@ public class LogAccessCtrl {
 		}
 		return response;
 	}
+	/**
+	 * 
+	 * @return
+	 */
+	@GetMapping("/PS")
+	public ResponseEntity<List<LogAccess>> getAllPS(
+			 @RequestParam( "page" ) int page, @RequestParam( "size" ) int size) {
+		List<LogAccess> list = new ArrayList<>();
+		Page<LogAccess> listPS = null;
+		PageRequest request = null;
+		ResponseEntity<List<LogAccess>> response = null;
+		//fix request mejora el control de nulos o vacio
+		listPS = logAccessService.getAll(request);
+		
+		list.addAll(listPS.getContent());
+		if(list != null && list.size() > 0){
+			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+		}else{
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+		}
+		return response;
+	}
+	
+//	Page<LogAccess> users = repository.findAll(new PageRequest(1, 20));
 }
