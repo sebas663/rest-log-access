@@ -60,18 +60,18 @@ public class LogAccessCtrl {
 		return response;
 	}
 
-	/**
-	 * 
-	 * @param input
-	 * @return
-	 */
-	@PostMapping()
-	ResponseEntity<?> add(@RequestBody LogAccess input) {
-		ResponseEntity<String> response = null;
-		logAccessService.save(input);
-		response = new ResponseEntity<String>("Was successfully saved.", HttpStatus.OK);
-		return response;
-	}
+//	/**
+//	 * 
+//	 * @param input
+//	 * @return
+//	 */
+//	@PostMapping()
+//	ResponseEntity<?> add(@RequestBody LogAccess input) {
+//		ResponseEntity<String> response = null;
+//		logAccessService.save(input);
+//		response = new ResponseEntity<String>("Was successfully saved.", HttpStatus.OK);
+//		return response;
+//	}
 
 	/**
 	 * 
@@ -87,6 +87,31 @@ public class LogAccessCtrl {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			list = logAccessService.getBetweenDates(formatter.parse(from), formatter.parse(to));
+			if (list != null && list.size() > 0) {
+				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			} else {
+				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+		}
+		return response;
+	}
+	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	@GetMapping("/dalo")
+	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDatesLogin(@RequestParam("from") String from,
+			@RequestParam("to") String to, @RequestParam("login") String login) {
+		List<LogAccess> list = null;
+		ResponseEntity<List<LogAccess>> response = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			list = logAccessService.getBetweenDatesAndLogin(formatter.parse(from), formatter.parse(to), login);
 			if (list != null && list.size() > 0) {
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
 			} else {
@@ -252,6 +277,36 @@ public class LogAccessCtrl {
 		try {
 			PageRequest request = getPageRequest(page, size, direction, "rCreationDate");
 			listPS = logAccessService.getBetweenDates(formatter.parse(from), formatter.parse(to), request);
+			if (listPS != null && listPS.getContent().size() > 0) {
+				list.addAll(listPS.getContent());
+				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			} else {
+				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+		}
+		return response;
+	}
+	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	@GetMapping("/PS/dalo")
+	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDatesLogin(@RequestParam("from") String from,
+			@RequestParam("to") String to, @RequestParam("login") String login, @RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "direction", required = false) String direction) {
+		List<LogAccess> list = new ArrayList<>();
+		Page<LogAccess> listPS = null;
+		ResponseEntity<List<LogAccess>> response = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			PageRequest request = getPageRequest(page, size, direction, "rCreationDate");
+			listPS = logAccessService.getBetweenDatesAndLogin(formatter.parse(from), formatter.parse(to), login, request);
 			if (listPS != null && listPS.getContent().size() > 0) {
 				list.addAll(listPS.getContent());
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);

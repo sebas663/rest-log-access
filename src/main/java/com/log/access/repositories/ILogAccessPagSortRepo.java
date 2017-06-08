@@ -1,6 +1,7 @@
 package com.log.access.repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,16 @@ public interface ILogAccessPagSortRepo extends PagingAndSortingRepository<LogAcc
 	 * @return
 	 */
 	Page<LogAccess> findByRCreationDateBetween(Date from, Date to, Pageable pageable);
+	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param login
+	 * @param pageable
+	 * @return
+	 */
+	Page<LogAccess> findByRCreationDateBetweenAndLogin(Date from, Date to, String login, Pageable pageable);
 
 	/**
 	 * 

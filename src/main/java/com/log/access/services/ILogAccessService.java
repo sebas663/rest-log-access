@@ -33,6 +33,15 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	List<LogAccess> getBetweenDates(Date from, Date to);
+	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param login
+	 * @return
+	 */
+	List<LogAccess> getBetweenDatesAndLogin(Date from, Date to,String login);
 
 	/**
 	 * 
@@ -91,6 +100,15 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getBetweenDates(Date from, Date to, PageRequest request);
+	
+	/**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param login
+	 * @return
+	 */
+	Page<LogAccess> getBetweenDatesAndLogin(Date from, Date to,String login, PageRequest request);
 
 	/**
 	 * 

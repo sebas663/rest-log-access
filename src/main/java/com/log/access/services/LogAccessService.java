@@ -23,7 +23,7 @@ public class LogAccessService implements ILogAccessService {
 	 * 
 	 */
 	@Autowired
-	private ILogAccessRepo logAccessRepository;
+	private ILogAccessRepo logAccessRepo;
 	/**
 	 * 
 	 */
@@ -38,7 +38,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getAll() {
 
-		return logAccessRepository.findAll();
+		return logAccessRepo.findAll();
 	}
 
 	/*
@@ -51,7 +51,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public void save(LogAccess logAccess) {
 
-		logAccessRepository.save(logAccess);
+		logAccessRepo.save(logAccess);
 	}
 
 	/*
@@ -64,7 +64,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getBetweenDates(Date from, Date to) {
 
-		return logAccessRepository.findByRCreationDateBetween(from, to);
+		return logAccessRepo.findByRCreationDateBetween(from, to);
 	}
 
 	/*
@@ -76,7 +76,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByLogin(String login) {
 
-		return logAccessRepository.findByLogin(login);
+		return logAccessRepo.findByLogin(login);
 	}
 
 	/*
@@ -88,7 +88,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByDocument(String document) {
 
-		return logAccessRepository.findByDocument(document);
+		return logAccessRepo.findByDocument(document);
 	}
 
 	/*
@@ -100,7 +100,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByAction(String action) {
 
-		return logAccessRepository.findByAction(action);
+		return logAccessRepo.findByAction(action);
 	}
 
 	/*
@@ -111,7 +111,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByNhc(String nhc) {
 
-		return logAccessRepository.findByNhc(nhc);
+		return logAccessRepo.findByNhc(nhc);
 	}
 
 	/*
@@ -123,7 +123,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByNepisode(String nepisode) {
 
-		return logAccessRepository.findByNepisode(nepisode);
+		return logAccessRepo.findByNepisode(nepisode);
 	}
 
 	/*
@@ -134,14 +134,15 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getByIp(String ip) {
 
-		return logAccessRepository.findByIp(ip);
+		return logAccessRepo.findByIp(ip);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.log.access.services.ILogAccessService#getAll(org.springframework.data.domain.PageRequest)
+	 * com.log.access.services.ILogAccessService#getAll(org.springframework.data
+	 * .domain.PageRequest)
 	 */
 	@Override
 	public Page<LogAccess> getAll(PageRequest request) {
@@ -236,5 +237,32 @@ public class LogAccessService implements ILogAccessService {
 	public Page<LogAccess> getByIp(String ip, PageRequest request) {
 
 		return logAccessPagSortRepo.findByIp(ip, request);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.log.access.services.ILogAccessService#getBetweenDatesLogin(java.util.
+	 * Date, java.util.Date, java.lang.String)
+	 */
+	@Override
+	public List<LogAccess> getBetweenDatesAndLogin(Date from, Date to, String login) {
+
+		return logAccessRepo.findByRCreationDateBetweenAndLogin(from, to, login);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.log.access.services.ILogAccessService#getBetweenDatesLogin(java.util.
+	 * Date, java.util.Date, java.lang.String,
+	 * org.springframework.data.domain.PageRequest)
+	 */
+	@Override
+	public Page<LogAccess> getBetweenDatesAndLogin(Date from, Date to, String login, PageRequest request) {
+
+		return logAccessPagSortRepo.findByRCreationDateBetweenAndLogin(from, to, login, request);
 	}
 }

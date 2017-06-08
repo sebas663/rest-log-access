@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  *
  */
 @Entity
-@Table(name = "LOG_ACCESS_DATA_T")
+@Table(name = "LOG_ACCESS_DATA_VIEW")
 public class LogAccess implements Serializable {
 
 	/**
