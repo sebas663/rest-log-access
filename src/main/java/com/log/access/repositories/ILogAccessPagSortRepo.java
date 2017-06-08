@@ -1,10 +1,13 @@
 package com.log.access.repositories;
 
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.TemporalType;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.log.access.entities.LogAccess;
@@ -27,7 +30,26 @@ public interface ILogAccessPagSortRepo extends PagingAndSortingRepository<LogAcc
 	 * @param pageable
 	 * @return
 	 */
-	Page<LogAccess> findByRCreationDateBetweenAndLogin(Date from, Date to, String login, Pageable pageable);
+	 @Query(value = "SELECT t "
+			 +" FROM LogAccess t "
+			 +"  WHERE t.login = ?1 "
+			 +"    AND t.rCreationDate BETWEEN ?2 "
+			 +"                              AND ?3 ")
+	Page<LogAccess> findByLoginAndRCreationDateBetween(String login, Date from, @Temporal(TemporalType.DATE) Date to, Pageable pageable);
+	 
+   /**
+	 * 
+	 * @param from
+	 * @param to
+	 * @param login
+	 * @param pageable
+	 * @return
+	 */
+	 @Query(value = "SELECT t "
+			 +"   FROM LogAccess t "
+			 +"  WHERE t.login = ?1 "
+			 +"    AND trunc(t.rCreationDate) = trunc(?2)")
+	Page<LogAccess> findByLoginAndRCreationDate(String login, Date from, Pageable pageable);
 
 	/**
 	 * 

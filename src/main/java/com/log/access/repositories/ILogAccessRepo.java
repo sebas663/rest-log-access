@@ -28,7 +28,7 @@ public interface ILogAccessRepo extends JpaRepository<LogAccess, Long> {
 	 * @param login
 	 * @return
 	 */
-	List<LogAccess> findByRCreationDateBetweenAndLogin(Date from, Date to, String login);
+	List<LogAccess> findByLoginAndRCreationDateBetween(String login, Date from, Date to);
 
 	/**
 	 * 

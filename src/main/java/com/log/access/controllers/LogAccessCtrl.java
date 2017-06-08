@@ -109,9 +109,9 @@ public class LogAccessCtrl {
 			@RequestParam("to") String to, @RequestParam("login") String login) {
 		List<LogAccess> list = null;
 		ResponseEntity<List<LogAccess>> response = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		try {
-			list = logAccessService.getBetweenDatesAndLogin(formatter.parse(from), formatter.parse(to), login);
+			list = logAccessService.getBetweenDatesAndLogin(formatter.parse(from + " 00:00:00"), formatter.parse(to + " 23:59:59"), login);
 			if (list != null && list.size() > 0) {
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
 			} else {

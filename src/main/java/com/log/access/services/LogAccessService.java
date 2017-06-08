@@ -249,7 +249,7 @@ public class LogAccessService implements ILogAccessService {
 	@Override
 	public List<LogAccess> getBetweenDatesAndLogin(Date from, Date to, String login) {
 
-		return logAccessRepo.findByRCreationDateBetweenAndLogin(from, to, login);
+		return logAccessRepo.findByLoginAndRCreationDateBetween(login, from, to);
 	}
 
 	/*
@@ -262,7 +262,12 @@ public class LogAccessService implements ILogAccessService {
 	 */
 	@Override
 	public Page<LogAccess> getBetweenDatesAndLogin(Date from, Date to, String login, PageRequest request) {
-
-		return logAccessPagSortRepo.findByRCreationDateBetweenAndLogin(from, to, login, request);
+		Page<LogAccess> pages = null;
+		if(from.equals(to)){
+			pages = logAccessPagSortRepo.findByLoginAndRCreationDate(login, from, request);
+		}else{
+			pages = logAccessPagSortRepo.findByLoginAndRCreationDateBetween(login, from, to, request);
+		}
+		return pages;
 	}
 }
