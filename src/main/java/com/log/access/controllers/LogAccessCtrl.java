@@ -1,7 +1,9 @@
 package com.log.access.controllers;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,14 +111,19 @@ public class LogAccessCtrl {
 			@RequestParam("to") String to, @RequestParam("login") String login) {
 		List<LogAccess> list = null;
 		ResponseEntity<List<LogAccess>> response = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date frm = null;
+		Date t = null;
 		try {
-			list = logAccessService.getBetweenDatesAndLogin(formatter.parse(from + " 00:00:00"), formatter.parse(to + " 23:59:59"), login);
+			frm = getDateFromString(from);
+			t   = getDateFromString(to);
+			list = logAccessService.getBetweenDatesAndLogin(frm,t, login);
 			if (list != null && list.size() > 0) {
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
 			} else {
 				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
 			}
+		} catch (ParseException e) {
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		}
@@ -273,16 +280,21 @@ public class LogAccessCtrl {
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
 		ResponseEntity<List<LogAccess>> response = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date frm = null;
+		Date t = null;
 		try {
+			frm = getDateFromString(from);
+			t   = getDateFromString(to);
 			PageRequest request = getPageRequest(page, size, direction, "rCreationDate");
-			listPS = logAccessService.getBetweenDates(formatter.parse(from), formatter.parse(to), request);
+			listPS = logAccessService.getBetweenDates(frm, t, request);
 			if (listPS != null && listPS.getContent().size() > 0) {
 				list.addAll(listPS.getContent());
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
 			} else {
 				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
 			}
+		} catch (ParseException e) {
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		}
@@ -303,16 +315,21 @@ public class LogAccessCtrl {
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
 		ResponseEntity<List<LogAccess>> response = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date frm = null;
+		Date t = null;
 		try {
+			frm = getDateFromString(from);
+			t   = getDateFromString(to);
 			PageRequest request = getPageRequest(page, size, direction, "rCreationDate");
-			listPS = logAccessService.getBetweenDatesAndLogin(formatter.parse(from), formatter.parse(to), login, request);
+			listPS = logAccessService.getBetweenDatesAndLogin(frm, t, login, request);
 			if (listPS != null && listPS.getContent().size() > 0) {
 				list.addAll(listPS.getContent());
 				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
 			} else {
 				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
 			}
+		} catch (ParseException e) {
+			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
 		}
@@ -496,6 +513,18 @@ public class LogAccessCtrl {
 		Integer s = size != null ? size : this.defaultSize;
 		PageRequest request = new PageRequest(p.intValue(), s.intValue(), sort);
 		return request;
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 * @throws ParseException
+	 */
+	private Date getDateFromString(String d) throws ParseException{
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = formatter.parse(d);
+		return date;
 	}
 
 }

@@ -35,7 +35,7 @@ public interface ILogAccessPagSortRepo extends PagingAndSortingRepository<LogAcc
 			 +"  WHERE t.login = ?1 "
 			 +"    AND t.rCreationDate BETWEEN ?2 "
 			 +"                              AND ?3 ")
-	Page<LogAccess> findByLoginAndRCreationDateBetween(String login, Date from, @Temporal(TemporalType.DATE) Date to, Pageable pageable);
+	Page<LogAccess> findByLoginAndRCreationDateBetween(String login, Date from, Date to, Pageable pageable);
 	 
    /**
 	 * 

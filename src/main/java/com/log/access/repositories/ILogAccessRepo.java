@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.log.access.entities.LogAccess;
 
@@ -28,6 +29,11 @@ public interface ILogAccessRepo extends JpaRepository<LogAccess, Long> {
 	 * @param login
 	 * @return
 	 */
+	 @Query(value = "SELECT t "
+			 +" FROM LogAccess t "
+			 +"  WHERE t.login = ?1 "
+			 +"    AND t.rCreationDate BETWEEN ?2 "
+			 +"                              AND ?3 ")
 	List<LogAccess> findByLoginAndRCreationDateBetween(String login, Date from, Date to);
 
 	/**
