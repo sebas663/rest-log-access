@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * 
  * @author sebastian
@@ -17,6 +18,7 @@ public class LogAccessApplication {
 	 */
 	@Autowired
 	DataSource dataSource;
+
 	/**
 	 * 
 	 * @param args

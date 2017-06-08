@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import com.log.access.entities.LogAccess;
+
 /**
  * 
  * @author sebastian
@@ -18,6 +19,13 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	List<LogAccess> getAll();
+
+	/**
+	 * 
+	 * @param logAccess
+	 */
+	void save(LogAccess logAccess);
+
 	/**
 	 * 
 	 * @param from
@@ -25,48 +33,56 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	List<LogAccess> getBetweenDates(Date from, Date to);
+
 	/**
 	 * 
 	 * @param login
 	 * @return
 	 */
 	List<LogAccess> getByLogin(String login);
+
 	/**
 	 * 
 	 * @param document
 	 * @return
 	 */
 	List<LogAccess> getByDocument(String document);
+
 	/**
 	 * 
 	 * @param action
 	 * @return
 	 */
 	List<LogAccess> getByAction(String action);
+
 	/**
 	 * 
 	 * @param nhc
 	 * @return
 	 */
 	List<LogAccess> getByNhc(String nhc);
+
 	/**
 	 * 
 	 * @param nepisode
 	 * @return
 	 */
 	List<LogAccess> getByNepisode(String nepisode);
+
 	/**
 	 * 
 	 * @param ip
 	 * @return
 	 */
 	List<LogAccess> getByIp(String ip);
+
 	/**
 	 * 
 	 * @param request
 	 * @return
 	 */
 	Page<LogAccess> getAll(PageRequest request);
+
 	/**
 	 * 
 	 * @param from
@@ -75,6 +91,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getBetweenDates(Date from, Date to, PageRequest request);
+
 	/**
 	 * 
 	 * @param login
@@ -82,6 +99,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getByLogin(String login, PageRequest request);
+
 	/**
 	 * 
 	 * @param document
@@ -89,6 +107,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getByDocument(String document, PageRequest request);
+
 	/**
 	 * 
 	 * @param action
@@ -96,6 +115,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getByAction(String action, PageRequest request);
+
 	/**
 	 * 
 	 * @param nhc
@@ -103,6 +123,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getByNhc(String nhc, PageRequest request);
+
 	/**
 	 * 
 	 * @param nepisode
@@ -110,6 +131,7 @@ public interface ILogAccessService {
 	 * @return
 	 */
 	Page<LogAccess> getByNepisode(String nepisode, PageRequest request);
+
 	/**
 	 * 
 	 * @param ip
