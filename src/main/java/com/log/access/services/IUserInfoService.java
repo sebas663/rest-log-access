@@ -1,5 +1,7 @@
 package com.log.access.services;
 
+import java.util.List;
+
 import com.log.access.entities.UserInfo;
 
 /**
@@ -14,4 +16,10 @@ public interface IUserInfoService {
 	 * @return
 	 */
 	UserInfo getUserInfoByLogin(String login);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	List<UserInfo> getAll();
 }
