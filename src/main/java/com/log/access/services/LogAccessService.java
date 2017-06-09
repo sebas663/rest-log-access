@@ -262,12 +262,7 @@ public class LogAccessService implements ILogAccessService {
 	 */
 	@Override
 	public Page<LogAccess> getBetweenDatesAndLogin(Date from, Date to, String login, PageRequest request) {
-		Page<LogAccess> pages = null;
-		if(from.equals(to)){
-			pages = logAccessPagSortRepo.findByLoginAndRCreationDate(login, from, request);
-		}else{
-			pages = logAccessPagSortRepo.findByLoginAndRCreationDateBetween(login, from, to, request);
-		}
-		return pages;
+
+		return logAccessPagSortRepo.findByLoginAndRCreationDateBetween(login, from, to, request);
 	}
 }
