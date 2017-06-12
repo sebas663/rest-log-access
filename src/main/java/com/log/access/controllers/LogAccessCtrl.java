@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.log.access.entities.LogAccess;
+import com.log.access.responses.PageResponse;
 import com.log.access.services.ILogAccessService;
 
 /**
@@ -246,19 +247,24 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS")
-	public ResponseEntity<List<LogAccess>> getAllPS(@RequestParam(value = "page", required = false) Integer page,
+	public ResponseEntity<PageResponse> getAllPS(@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "rCreationDate");
 		listPS = logAccessService.getAll(pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getAll().size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -273,13 +279,15 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/da")
-	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDates(@RequestParam("from") String from,
+	public ResponseEntity<PageResponse> getLogAccessBetweenDates(@RequestParam("from") String from,
 			@RequestParam("to") String to, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		Date frm = null;
 		Date t = null;
 		try {
@@ -289,14 +297,17 @@ public class LogAccessCtrl {
 			listPS = logAccessService.getBetweenDates(frm, t, request);
 			if (listPS != null && listPS.getContent().size() > 0) {
 				list.addAll(listPS.getContent());
-				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+				pageResp.setListPaged(list);
+				totalItems = logAccessService.getBetweenDates(frm, t).size();
+				pageResp.setTotalItems(totalItems);
+				response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 			} else {
-				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+				response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 			}
 		} catch (ParseException e) {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<PageResponse>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<PageResponse>(HttpStatus.BAD_REQUEST);
 		}
 		return response;
 	}
@@ -308,13 +319,15 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/dalo")
-	public ResponseEntity<List<LogAccess>> getLogAccessBetweenDatesLogin(@RequestParam("from") String from,
+	public ResponseEntity<PageResponse> getLogAccessBetweenDatesLogin(@RequestParam("from") String from,
 			@RequestParam("to") String to, @RequestParam("login") String login, @RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		Date frm = null;
 		Date t = null;
 		try {
@@ -324,14 +337,17 @@ public class LogAccessCtrl {
 			listPS = logAccessService.getBetweenDatesAndLogin(frm, t, login, request);
 			if (listPS != null && listPS.getContent().size() > 0) {
 				list.addAll(listPS.getContent());
-				response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+				pageResp.setListPaged(list);
+				totalItems = logAccessService.getBetweenDatesAndLogin(frm,t, login).size();
+				pageResp.setTotalItems(totalItems);
+				response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 			} else {
-				response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+				response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 			}
 		} catch (ParseException e) {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<PageResponse>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.BAD_REQUEST);
+			response = new ResponseEntity<PageResponse>(HttpStatus.BAD_REQUEST);
 		}
 		return response;
 	}
@@ -345,20 +361,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/lo/{login}")
-	public ResponseEntity<List<LogAccess>> getLogAccessByLogin(@PathVariable("login") String login,
+	public ResponseEntity<PageResponse> getLogAccessByLogin(@PathVariable("login") String login,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "login");
 		listPS = logAccessService.getByLogin(login, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByLogin(login).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -372,20 +393,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/do/{document}")
-	public ResponseEntity<List<LogAccess>> getLogAccessByDocument(@PathVariable("document") String document,
+	public ResponseEntity<PageResponse> getLogAccessByDocument(@PathVariable("document") String document,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "document");
 		listPS = logAccessService.getByDocument(document, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByDocument(document).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -399,20 +425,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/ac/{action}")
-	public ResponseEntity<List<LogAccess>> getLogAccessByAction(@PathVariable("action") String action,
+	public ResponseEntity<PageResponse> getLogAccessByAction(@PathVariable("action") String action,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "action");
 		listPS = logAccessService.getByAction(action, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByAction(action).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -426,20 +457,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/nh/{nhc}")
-	public ResponseEntity<List<LogAccess>> getLogAccessByNhc(@PathVariable("nhc") String nhc,
+	public ResponseEntity<PageResponse> getLogAccessByNhc(@PathVariable("nhc") String nhc,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "nhc");
 		listPS = logAccessService.getByNhc(nhc, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByNhc(nhc).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -453,20 +489,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/ne/{nepisode}")
-	public ResponseEntity<List<LogAccess>> getLogAccessBynNepisode(@PathVariable("nepisode") String nepisode,
+	public ResponseEntity<PageResponse> getLogAccessBynNepisode(@PathVariable("nepisode") String nepisode,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "nepisode");
 		listPS = logAccessService.getByNepisode(nepisode, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByNepisode(nepisode).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
@@ -480,20 +521,25 @@ public class LogAccessCtrl {
 	 * @return
 	 */
 	@GetMapping("/PS/i/{ip:.+}")
-	public ResponseEntity<List<LogAccess>> getLogAccessByIp(@PathVariable("ip") String ip,
+	public ResponseEntity<PageResponse> getLogAccessByIp(@PathVariable("ip") String ip,
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size,
 			@RequestParam(value = "direction", required = false) String direction) {
+		PageResponse pageResp = new PageResponse();
+		Integer totalItems = null;
 		List<LogAccess> list = new ArrayList<>();
 		Page<LogAccess> listPS = null;
-		ResponseEntity<List<LogAccess>> response = null;
+		ResponseEntity<PageResponse> response = null;
 		PageRequest pageRequest = getPageRequest(page, size, direction, "ip");
 		listPS = logAccessService.getByIp(ip, pageRequest);
 		if (listPS != null && listPS.getContent().size() > 0) {
 			list.addAll(listPS.getContent());
-			response = new ResponseEntity<List<LogAccess>>(list, HttpStatus.OK);
+			pageResp.setListPaged(list);
+			totalItems = logAccessService.getByIp(ip).size();
+			pageResp.setTotalItems(totalItems);
+			response = new ResponseEntity<PageResponse>(pageResp, HttpStatus.OK);
 		} else {
-			response = new ResponseEntity<List<LogAccess>>(HttpStatus.NOT_FOUND);
+			response = new ResponseEntity<PageResponse>(HttpStatus.NOT_FOUND);
 		}
 		return response;
 	}
